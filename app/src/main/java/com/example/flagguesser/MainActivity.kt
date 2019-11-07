@@ -4,13 +4,18 @@ import android.graphics.drawable.Drawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var topButton: Button
     lateinit var midButton: Button
     lateinit var botButton: Button
+    lateinit var countryText: TextView
+    lateinit var scoreText: TextView
 
+    var score = 0
     var flags = mutableListOf<String>("Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,6 +25,8 @@ class MainActivity : AppCompatActivity() {
         topButton = findViewById(R.id.top_button)
         midButton = findViewById(R.id.mid_button)
         botButton = findViewById(R.id.bot_button)
+        countryText = findViewById(R.id.provided_text_view)
+        scoreText = findViewById(R.id.score_view)
 
         startGame()
     }
@@ -32,6 +39,14 @@ class MainActivity : AppCompatActivity() {
         val topCountry = flags[0]
         val midCountry = flags[1]
         val botCountry = flags[2]
+
+        // Set the provided country
+        val randomNum = Random.nextInt(0,3)
+        val givenCountry = flags[randomNum]
+        countryText.text = getString(R.string.provided_string, givenCountry)
+
+        // Set score text
+        scoreText.text = getString(R.string.score_string, score)
 
         // Set drawables
         val topFlag = when (topCountry) {
