@@ -18,6 +18,15 @@ class MainActivity : AppCompatActivity() {
     var score = 0
     var flags = mutableListOf<String>("Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US")
 
+    // Access first 3 countries
+    val topCountry = flags[0]
+    val midCountry = flags[1]
+    val botCountry = flags[2]
+
+    // Set the provided country
+    val randomNum = Random.nextInt(0,3)
+    val givenCountry = flags[randomNum]
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,69 +38,48 @@ class MainActivity : AppCompatActivity() {
         scoreText = findViewById(R.id.score_view)
 
         startGame()
+
+        topButton.setOnClickListener {
+            if (givenCountry == topCountry) {
+                incrementScore()
+            } else {
+                decrementScore()
+            }
+        }
+
+        midButton.setOnClickListener {
+            if (givenCountry == midCountry) {
+                incrementScore()
+            } else {
+                decrementScore()
+            }
+        }
+
+        botButton.setOnClickListener {
+            if (givenCountry == botCountry) {
+                incrementScore()
+            } else {
+                decrementScore()
+            }
+        }
+
     }
 
     private fun startGame() {
         // Shuffle list of flags
         flags.shuffle()
 
-        // Access first 3 countries
-        val topCountry = flags[0]
-        val midCountry = flags[1]
-        val botCountry = flags[2]
-
-        // Set the provided country
-        val randomNum = Random.nextInt(0,3)
-        val givenCountry = flags[randomNum]
+        // Show provided country
         countryText.text = getString(R.string.provided_string, givenCountry)
+
 
         // Set score text
         scoreText.text = getString(R.string.score_string, score)
 
         // Set drawables
-        val topFlag = when (topCountry) {
-            "Estonia" -> getDrawable(R.drawable.estonia)
-            "France" -> getDrawable(R.drawable.france)
-            "Germany" -> getDrawable(R.drawable.germany)
-            "Ireland" -> getDrawable(R.drawable.ireland)
-            "Italy" -> getDrawable(R.drawable.italy)
-            "Monaco" -> getDrawable(R.drawable.monaco)
-            "Nigeria" -> getDrawable(R.drawable.nigeria)
-            "Poland" -> getDrawable(R.drawable.poland)
-            "Russia" -> getDrawable(R.drawable.russia)
-            "Spain" -> getDrawable(R.drawable.spain)
-            "UK" -> getDrawable(R.drawable.uk)
-            else -> getDrawable(R.drawable.us)
-        }
-        val midFlag = when (midCountry) {
-            "Estonia" -> getDrawable(R.drawable.estonia)
-            "France" -> getDrawable(R.drawable.france)
-            "Germany" -> getDrawable(R.drawable.germany)
-            "Ireland" -> getDrawable(R.drawable.ireland)
-            "Italy" -> getDrawable(R.drawable.italy)
-            "Monaco" -> getDrawable(R.drawable.monaco)
-            "Nigeria" -> getDrawable(R.drawable.nigeria)
-            "Poland" -> getDrawable(R.drawable.poland)
-            "Russia" -> getDrawable(R.drawable.russia)
-            "Spain" -> getDrawable(R.drawable.spain)
-            "UK" -> getDrawable(R.drawable.uk)
-            else -> getDrawable(R.drawable.us)
-        }
-
-        val botFlag = when (botCountry) {
-            "Estonia" -> getDrawable(R.drawable.estonia)
-            "France" -> getDrawable(R.drawable.france)
-            "Germany" -> getDrawable(R.drawable.germany)
-            "Ireland" -> getDrawable(R.drawable.ireland)
-            "Italy" -> getDrawable(R.drawable.italy)
-            "Monaco" -> getDrawable(R.drawable.monaco)
-            "Nigeria" -> getDrawable(R.drawable.nigeria)
-            "Poland" -> getDrawable(R.drawable.poland)
-            "Russia" -> getDrawable(R.drawable.russia)
-            "Spain" -> getDrawable(R.drawable.spain)
-            "UK" -> getDrawable(R.drawable.uk)
-            else -> getDrawable(R.drawable.us)
-        }
+        val topFlag = setDrawable(topCountry)
+        val midFlag = setDrawable(midCountry)
+        val botFlag = setDrawable(botCountry)
 
         // Set backgrounds
         topButton.background = topFlag
@@ -99,5 +87,32 @@ class MainActivity : AppCompatActivity() {
         botButton.background = botFlag
 
 
+    }
+
+    private fun incrementScore() {
+        score += 1
+    }
+
+    private fun decrementScore() {
+        score -= 1
+    }
+
+    private fun setDrawable(country: String): Drawable {
+        val flag = when (country) {
+            "Estonia" -> getDrawable(R.drawable.estonia)
+            "France" -> getDrawable(R.drawable.france)
+            "Germany" -> getDrawable(R.drawable.germany)
+            "Ireland" -> getDrawable(R.drawable.ireland)
+            "Italy" -> getDrawable(R.drawable.italy)
+            "Monaco" -> getDrawable(R.drawable.monaco)
+            "Nigeria" -> getDrawable(R.drawable.nigeria)
+            "Poland" -> getDrawable(R.drawable.poland)
+            "Russia" -> getDrawable(R.drawable.russia)
+            "Spain" -> getDrawable(R.drawable.spain)
+            "UK" -> getDrawable(R.drawable.uk)
+            else -> getDrawable(R.drawable.us)
+        }
+
+        return flag!!
     }
 }
