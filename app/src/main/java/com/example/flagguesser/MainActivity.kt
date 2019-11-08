@@ -91,10 +91,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun incrementScore() {
         score += 1
+        startGame()
     }
 
     private fun decrementScore() {
         score -= 1
+        startGame()
     }
 
     private fun setDrawable(country: String): Drawable {
