@@ -19,13 +19,13 @@ class MainActivity : AppCompatActivity() {
     var flags = mutableListOf<String>("Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US")
 
     // Access first 3 countries
-    val topCountry = flags[0]
-    val midCountry = flags[1]
-    val botCountry = flags[2]
+    lateinit var topCountry: String
+    lateinit var midCountry: String
+    lateinit var botCountry: String
 
     // Set the provided country
-    val randomNum = Random.nextInt(0,3)
-    val givenCountry = flags[randomNum]
+    var randomNum: Int = 0
+    lateinit var givenCountry: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         scoreText = findViewById(R.id.score_view)
 
         startGame()
+
 
         topButton.setOnClickListener {
             if (givenCountry == topCountry) {
@@ -69,6 +70,10 @@ class MainActivity : AppCompatActivity() {
         // Shuffle list of flags
         flags.shuffle()
 
+        randomNum = Random.nextInt(0,3)
+
+        givenCountry = flags[randomNum]
+
         // Show provided country
         countryText.text = getString(R.string.provided_string, givenCountry)
 
@@ -76,10 +81,14 @@ class MainActivity : AppCompatActivity() {
         // Set score text
         scoreText.text = getString(R.string.score_string, score)
 
+        topCountry = flags[0]
+        midCountry = flags[1]
+        botCountry = flags[2]
+
         // Set drawables
-        val topFlag = setDrawable(topCountry)
-        val midFlag = setDrawable(midCountry)
-        val botFlag = setDrawable(botCountry)
+        var topFlag = setDrawable(topCountry)
+        var midFlag = setDrawable(midCountry)
+        var botFlag = setDrawable(botCountry)
 
         // Set backgrounds
         topButton.background = topFlag
@@ -100,7 +109,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDrawable(country: String): Drawable {
-        val flag = when (country) {
+        var flag = when (country) {
             "Estonia" -> getDrawable(R.drawable.estonia)
             "France" -> getDrawable(R.drawable.france)
             "Germany" -> getDrawable(R.drawable.germany)
