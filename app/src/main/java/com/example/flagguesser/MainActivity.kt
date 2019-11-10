@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
@@ -14,8 +15,10 @@ class MainActivity : AppCompatActivity() {
     lateinit var botButton: Button
     lateinit var countryText: TextView
     lateinit var scoreText: TextView
+    lateinit var missesText: TextView
 
     var score = 0
+    var missesRemaining = 3
     var flags = mutableListOf<String>("Estonia", "France", "Germany", "Ireland", "Italy", "Monaco", "Nigeria", "Poland", "Russia", "Spain", "UK", "US")
 
     // Access first 3 countries
@@ -36,6 +39,7 @@ class MainActivity : AppCompatActivity() {
         botButton = findViewById(R.id.bot_button)
         countryText = findViewById(R.id.provided_text_view)
         scoreText = findViewById(R.id.score_view)
+        missesText = findViewById(R.id.misses_view)
 
         startGame()
 
@@ -80,6 +84,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set score text
         scoreText.text = getString(R.string.score_string, score)
+        missesText.text = getString(R.string.misses_text, missesRemaining)
 
         topCountry = flags[0]
         midCountry = flags[1]
@@ -105,7 +110,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun decrementScore() {
         score -= 1
+        missesRemaining -= 1
+
+        if (missesRemaining > 0) {
+            startGame()
+        } else {
+            endGame()
+        }
+    }
+
+    private fun endGame() {
+
+        Toast.makeText(this, getString(R.string.final_score, score), Toast.LENGTH_LONG).show()
+
+        score = 0
+        missesRemaining = 3
+
         startGame()
+
     }
 
     private fun setDrawable(country: String): Drawable {

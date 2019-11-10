@@ -2,4 +2,6 @@
     <string name="app_name">Flag Guesser</string>
     <string name="provided_string">Which flag belongs to %1$s?</string>
     <string name="score_string">Score: %1$d</string>
+    <string name="misses_text">Misses Remaining: %1$d</string>
+    <string name="final_score">That\'s it, game over! Your final score was: %1$d</string>
 </resources>
